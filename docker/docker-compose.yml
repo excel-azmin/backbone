@@ -1,0 +1,78 @@
+services:
+  services:
+  mongodb-master:
+    image: mongo:6.0.8
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - mongodb-master:/data/db
+    networks:
+      - backbone-network
+    depends_on:
+      - mongodb-slave1
+      - mongodb-slave2
+    links:
+      - mongodb-slave1
+      - mongodb-slave2
+    environment:
+      - MONGODB_USERNAME=${DB_USER}
+      - MONGODB_PASSWORD=${DB_PASSWORD}
+      - MONGODB_DATABASE=${DB_NAME}
+      - MONGODB_PRIMARY_ROOT_USER=root
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - SERVER_DB=${SERVER_DB_NAME}
+      - SERVER_USER=${SERVER_DB_USER}
+      - SERVER_DB_PASSWORD=${SERVER_DB_PASSWORD}
+    entrypoint:
+      ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongodb_replica_set"]
+
+  mongodb-slave1:
+    image: mongo:6.0.8
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+    volumes:
+      - mongodb-slave1:/data/db
+    networks:
+      - backbone-network
+    entrypoint:
+      ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongodb_replica_set"]
+
+  mongodb-slave2:
+    image: mongo:6.0.8
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - mongodb-slave2:/data/db
+    networks:
+      - backbone-network
+    entrypoint:
+      ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongodb_replica_set"]
+
+  redis:
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+      - "8079:8001"
+    volumes:
+      - backbone-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - backbone-network
+
+volumes:
+  mongodb-master:
+  mongodb-slave1:
+  mongodb-slave2:
+  backbone-redis:
+
+networks:
+  backbone-network:
+    external: true
