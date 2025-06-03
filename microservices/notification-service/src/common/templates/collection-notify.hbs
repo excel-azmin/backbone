@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Important for mobile responsiveness -->
+    <style>
+        body {
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            max-width: 80px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content {
+            padding: 20px;
+            text-align: left;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto; /* Allows horizontal scrolling */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #008ce3 #f4f4f4; /* Custom scrollbar color for Firefox */
+        }
+        .table-responsive table {
+            width: 100%;
+            min-width: 600px; /* Prevent column squish */
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #e2e2e2;
+        }
+        th {
+            background-color: #008ce3;
+            color: white;
+        }
+        .footer {
+            margin-top: 1px;
+            padding: 20px;
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer p {
+            margin-top: 5px;
+            font-size: 13px;
+            font-style: italic;
+            color: #888;
+        }
+
+        /* For webkit browsers (Chrome, Safari) to ensure scrollbars are visible */
+        .table-responsive::-webkit-scrollbar {
+            width: 12px; /* Width of the scrollbar */
+        }
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: #008ce3; /* Color of the scrollbar thumb */
+            border-radius: 6px;
+        }
+        .table-responsive::-webkit-scrollbar-track {
+            background-color: #f4f4f4; /* Color of the scrollbar track */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://res.cloudinary.com/dydfwvvro/image/upload/fl_preserve_transparency/v1746507037/arc-cc_mrkifp.jpg" alt="ArcOne" class="logo">
+
+        <div class="content">
+            <p>Dear <strong>{{fullName}}</strong>,</p>
+            <p>Please find below the details of today's collections:</p>
+            
+            <div class="table-responsive">
+                <div style="display: block; overflow-x: auto;">
+                    {{{collectionTable}}}
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Best regards,<br>
+            ArcOne Team
+            <p>This is a system generated email. Please do not reply, as responses to this email are not monitored.</p>
+        </div>
+    </div>
+</body>
+</html>

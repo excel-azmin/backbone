@@ -24,22 +24,17 @@ export const MONGO_REPLICA_SECONDARY_1_PORT = 'MONGO_REPLICA_SECONDARY_1_PORT';
 export const MONGO_REPLICA_SECONDARY_2_PORT = 'MONGO_REPLICA_SECONDARY_2_PORT';
 export const READ_PREFERENCE = 'READ_PREFERENCE';
 export const REPLICA_SET_NAME = 'REPLICA_SET_NAME';
-export const MAIL_HOST = 'MAIL_HOST';
-export const MAIL_PORT = 'MAIL_PORT';
-export const MAIL_SECURE = 'MAIL_SECURE';
-export const MAIL_IGNORE_TLS = 'MAIL_IGNORE_TLS';
-export const MAIL_USER = 'MAIL_USER';
-export const MAIL_PASSWORD = 'MAIL_PASSWORD';
-export const MAIL_VERIFICATION_HOST = 'MAIL_VERIFICATION_HOST';
-export const MAIL_SENDER_NAME = 'MAIL_SENDER_NAME';
-export const SMS_API_KEY = 'SMS_API_KEY';
-export const SMS_SENDER_NAME = 'SMS_SENDER_NAME';
-export const SMS_API_URL = 'SMS_API_URL';
-export const SMS_SECRET_KEY = 'SMS_SECRET_KEY';
-export const SMS_CALLER_ID = 'SMS_CALLER_ID';
-export const SMS_SENDER_ID = 'SMS_SENDER_ID';
+export const JWT_ALGORITHM = 'JWT_ALGORITHM';
+export const JWT_SECRET = 'JWT_SECRET';
+export const JWT_EXPIRES_IN = 'JWT_EXPIRES_IN';
+export const LOGIN_EXPIRES_IN = 'LOGIN_EXPIRES_IN';
+export const REFRESH_SECRET = 'REFRESH_SECRET';
+export const REFRESH_EXPIRES_IN = 'REFRESH_EXPIRES_IN';
+export const LOGIN_SECRET = 'LOGIN_SECRET';
+export const WEBHOOK_SECRET = 'WEBHOOK_SECRET';
 export const REDIS_HOST = 'REDIS_HOST';
 export const REDIS_PORT = 'REDIS_PORT';
+export const RMQ_HOST = 'RMQ_HOST';
 
 @Injectable()
 export class EnvConfigService {
@@ -72,16 +67,19 @@ export class EnvConfigService {
       READ_PREFERENCE: Joi.string().required(),
       REPLICA_SET_NAME: Joi.string().required(),
       MONGO_URI_PREFIX: Joi.string().optional(),
-      MAIL_SENDER_NAME: Joi.string().required(),
-      MAIL_HOST: Joi.string().required(),
-      MAIL_PORT: Joi.number().required(),
-      MAIL_SECURE: Joi.boolean().required(),
-      MAIL_IGNORE_TLS: Joi.boolean().required(),
-      MAIL_USER: Joi.string().required(),
-      MAIL_PASSWORD: Joi.string().required(),
-      MAIL_VERIFICATION_HOST: Joi.string().optional(),
+      JWT_ALGORITHM: Joi.string()
+        .valid('HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512')
+        .default('HS256'),
+      JWT_SECRET: Joi.string().required(),
+      JWT_EXPIRES_IN: Joi.string().default('1h'),
+      LOGIN_SECRET: Joi.string().required(),
+      LOGIN_EXPIRES_IN: Joi.string().default('15m'),
+      REFRESH_SECRET: Joi.string().required(),
+      REFRESH_EXPIRES_IN: Joi.string().default('7d'),
+      WEBHOOK_SECRET: Joi.string().required(),
       REDIS_HOST: Joi.string().required(),
       REDIS_PORT: Joi.number().required(),
+      RMQ_HOST: Joi.string().required(),
     });
 
     const { error, value: validatedEnvConfig } =

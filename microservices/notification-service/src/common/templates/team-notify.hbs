@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Message Alert [ETL]</title>
+    <style>
+        body { background-color: #f4f4f4; padding: 20px; }
+        .container { width: 90%; margin: auto; background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .content { padding: 20px; text-align: left; }
+        .footer { margin-top: 1px; text-align: left; font-size: 14px; color: #555; }
+        .logo { 
+            max-width: 80px; 
+            margin-bottom: 20px;  
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .footer p { margin-top: 5px; text-align: left; font-size: 13px; font-style: italic; color: #888;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo aligned to the left -->
+        <img src="https://res.cloudinary.com/dydfwvvro/image/upload/fl_preserve_transparency/v1746507037/arc-cc_mrkifp.jpg" alt="ArcOne" class="logo">
+
+        <p>Dear <strong>{{salesPersonName}},</strong></p>
+        <p>You have a new message from <strong>{{senderName}}</strong>:</p>
+        
+        <div class="content">
+            <blockquote style="border-left: 4px solid #ddd; padding-left: 10px; font-style: italic; text-align: left;">
+                {{message}}
+            </blockquote>
+        </div>
+
+        <div class="footer">
+            Best regards,<br>
+            ArcOne Team
+            <p>This is a system generated email. Please do not reply, as responses to this email are not monitored.</p>
+        </div>
+    </div>
+</body>
+</html>

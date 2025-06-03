@@ -1,0 +1,14 @@
+FROM node:20 AS base
+
+WORKDIR /usr/src/app
+
+# install pnpm  
+RUN npm install -g pnpm
+
+COPY package*.json ./
+
+RUN pnpm install
+
+COPY . .
+
+CMD ["pnpm", "run", "start:dev"]

@@ -1,4 +1,4 @@
-DB_HOST=localhost
+DB_HOST=mongodb-master
 DB_NAME=backbone-db
 DB_PASSWORD=password
 DB_USER=backbone
@@ -11,10 +11,21 @@ MONGO_REPLICA_SECONDARY_2_PORT=27017
 READ_PREFERENCE=primary
 REPLICA_SET_NAME=mongodb_replica_set
 
-MAIL_HOST=smtp.zoho.com
-MAIL_PORT=465
-MAIL_SECURE=true
-MAIL_IGNORE_TLS=true
-MAIL_USER=notifications@excelbd.com
-MAIL_PASSWORD=ETL&aliV$P@783
-MAIL_SENDER_NAME=ArApps
+JWT_ALGORITHM=HS256
+JWT_SECRET=secret
+JWT_EXPIRES_IN=1d
+
+LOGIN_SECRET=login-secret
+LOGIN_EXPIRES_IN=1d
+
+REFRESH_SECRET=refresh-secret
+REFRESH_EXPIRES_IN=7d
+
+WEBHOOK_SECRET=webhook-secret
+
+
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+RMQ_HOST=rabbitmq
+
