@@ -131,6 +131,11 @@ export class EmailNotificationService {
         title: sendMailDto.title || '',
         message: sendMailDto.message || '',
       },
+      'registration-verification': {
+        fullName: sendMailDto.fullName || 'User',
+        data: sendMailDto.data || {},
+        year: new Date().getFullYear(),
+      },
       'reset-password': {
         fullName: sendMailDto.fullName || 'User',
         email: sendMailDto.data?.email || '',

@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+  nginx:
+    build:
+      context: ./config
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3001:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - backbone-network
   api-gateway:
     build:
       context: ./api-gateway
@@ -8,8 +19,6 @@ services:
     restart: always
     env_file:
       - ./api-gateway/.env
-    ports:
-      - "1020:3000"
     networks:
       - backbone-network
     volumes:
@@ -22,8 +31,6 @@ services:
     restart: always
     env_file:
       - ./microservices/notification-service/.env
-    ports:
-      - "1021:3000"
     networks:
       - backbone-network
     volumes:

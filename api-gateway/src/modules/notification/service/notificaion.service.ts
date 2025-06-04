@@ -32,6 +32,7 @@ export class NotificationService {
           createNotificationDto,
         );
         const res = await firstValueFrom(result);
+        console.log('Email notification sent', res);
         return res;
       } else {
         const pushNotification = this.client.send(

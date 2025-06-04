@@ -16,15 +16,18 @@ export class RegistrationHandler
     const notificationPayload: CreateNotificationDto = {
       topic: 'User Registration Verification',
       title: 'User Registration Verification',
-      message: `Welcome ${firstName} ${lastName}, your registration was successful.`,
+      message: `Welcome ${firstName} ${lastName}, your registration was successful. Please verify your email address.`,
       email: [email],
       notificationType: NotificationType.EMAIL,
+      data: {
+        otp: 2545,
+      },
       fullName: `${firstName} ${lastName}`,
       mailTemplate: 'registration-verification',
       pushTokens: [],
       receiversId: [],
     };
-    this.eventEmitter.emit('notification.create', notificationPayload);
+    this.eventEmitter.emit('sendNotification', notificationPayload);
     return {
       message: 'Registration successful, verification email sent.',
       statusCode: 201,

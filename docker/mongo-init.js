@@ -13,3 +13,8 @@ rs.initiate({
 //   roles: [{ role: "dbOwner", db: "backbone-db" }],
 //   passwordDigestor: "server",
 // });
+
+// db.settings.insertOne({
+//   isMailEnabled: true,
+//   isPushEnabled: true
+// });

@@ -21,6 +21,7 @@ async function bootstrap() {
       },
     },
   });
+  app.setGlobalPrefix('api');
 
   // Swagger setup
   const config = new DocumentBuilder()
@@ -31,7 +32,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('API Gateway')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: false,
+  });
   SwaggerModule.setup('api-docs', app, document);
 
   // Global settings
@@ -40,7 +43,6 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
   });
-  app.setGlobalPrefix('api');
 
   // Start both microservice and HTTP server
   await app.startAllMicroservices();

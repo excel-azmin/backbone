@@ -16,6 +16,7 @@ export class AuthController {
 
   @Post('v1/registration')
   async authRegistration(@Body() registrationAuthDto: RegistrationAuthDto) {
+    console.log(registrationAuthDto);
     return await this.commandBus.execute(
       new RegistrationCommand(registrationAuthDto),
     );

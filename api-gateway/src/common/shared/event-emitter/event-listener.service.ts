@@ -9,8 +9,11 @@ export class EventListener implements OnModuleInit {
   ) {}
 
   onModuleInit() {
-    this.eventEmitter.on('sendNotification', async (data: any) => {
-      await this.notificationService.sendNotification(data);
-    });
+    this.eventEmitter.on(
+      'sendNotification',
+      async (notificationPayload: any) => {
+        await this.notificationService.sendNotification(notificationPayload);
+      },
+    );
   }
 }
