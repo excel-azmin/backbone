@@ -52,6 +52,7 @@ export class RegistrationHandler
     return {
       message: 'Registration successful, verification email sent.',
       statusCode: 201,
+      access_token: null,
     };
   }
 }

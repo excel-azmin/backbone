@@ -4,12 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EnvConfigModule } from './common/config/env/env-config.module';
 import { getDefaultDbConnectionString } from './common/config/mongodb/mongodb.connection';
+import { RedisConfigModule } from './common/config/redis/redis.connection';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotificationModule } from './modules/notification/notification.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(getDefaultDbConnectionString()),
+    RedisConfigModule,
     AuthModule,
     EnvConfigModule,
     NotificationModule,

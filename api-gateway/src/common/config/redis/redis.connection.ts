@@ -1,21 +1,22 @@
-import {
-  EnvConfigService,
-  REDIS_HOST,
-  REDIS_PORT,
-} from '../env/env-config.service';
+import { RedisModule, RedisModuleOptions } from '@nestjs-modules/ioredis';
+import { EnvConfigService } from '../env/env-config.service'; // Ensure you're importing the correct service
 
-const config = new EnvConfigService();
-
-export function redisConnectionString(): {
-  connection: {
-    host: string;
-    port: number;
-  };
-} {
+// Factory function to generate Redis connection string
+export const generateRedisUrl = async (
+  configService: EnvConfigService,
+): Promise<RedisModuleOptions> => {
+  // Fetch values from EnvConfigService
+  const host = configService.get('REDIS_HOST');
+  const port = +configService.get('REDIS_PORT');
+  const url = `redis://${host}:${port}/`;
   return {
-    connection: {
-      host: config.get(REDIS_HOST),
-      port: +config.get(REDIS_PORT),
-    },
+    type: 'single',
+    url,
   };
-}
+};
+
+export const RedisConfigModule = RedisModule.forRootAsync({
+  useFactory: async (configService: EnvConfigService) =>
+    generateRedisUrl(configService),
+  inject: [EnvConfigService],
+});

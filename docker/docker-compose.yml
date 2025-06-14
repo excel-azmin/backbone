@@ -69,6 +69,17 @@ services:
       retries: 5
     networks:
       - backbone-network
+  redis-insights:
+    image: redislabs/redisinsight:latest
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "8001:8001"
+    networks:
+      - backbone-network
+    depends_on:
+      - redis
   rabbitmq:
     image: rabbitmq:3-management
     environment:
