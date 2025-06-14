@@ -6,14 +6,14 @@ import { AppService } from './app.service';
 import { getDefaultMailConnectionConfig } from './common/constants/mail.connection';
 import { getDefaultDbConnectionString } from './common/constants/mongoose.connection';
 import { ExpoNotificationModule } from './expo-notification/expo-notification.module';
-import { PushNotificationModule } from './mail-notification/email-notification.module';
+import { EmailNotificationModule } from './mail-notification/email-notification.module';
 
 @Module({
   imports: [
     MailerModule.forRoot(getDefaultMailConnectionConfig()),
     MongooseModule.forRoot(getDefaultDbConnectionString()),
-    PushNotificationModule,
-    ExpoNotificationModule
+    EmailNotificationModule,
+    ExpoNotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

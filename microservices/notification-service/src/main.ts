@@ -11,10 +11,11 @@ async function bootstrap() {
       transport: Transport.RMQ,
       options: {
         urls: [`amqp://${getRmqHost()}:5672`],
-        queue: 'notification-service',
+        queue: 'notification_queue',
         queueOptions: {
           durable: true,
         },
+        persistent: true,
       },
     },
   );

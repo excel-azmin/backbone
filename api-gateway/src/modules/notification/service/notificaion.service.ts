@@ -12,47 +12,24 @@ import { UpdateNotificationDto } from '../dto/update-notificaion.dto';
 export class NotificationService {
   constructor(
     @Inject('NOTIFICATION_SERVICE') private readonly client: ClientProxy,
-    // private readonly userService: UserService,
   ) {}
 
   async sendNotification(createNotificationDto: CreateNotificationDto) {
     try {
       if (createNotificationDto.notificationType === NotificationType.PUSH) {
-        const result = this.client.send(
-          'sendExpoNotification',
-          createNotificationDto,
-        );
-        const res = await firstValueFrom(result);
-        return res;
+        this.client.emit('sendExpoNotification', createNotificationDto);
       } else if (
         createNotificationDto.notificationType === NotificationType.EMAIL
       ) {
-        const result = this.client.send(
-          'sendNotificationEmail',
-          createNotificationDto,
-        );
-        const res = await firstValueFrom(result);
-        console.log('Email notification sent', res);
-        return res;
+        this.client.emit('sendEmailNotification', createNotificationDto);
       } else {
-        const pushNotification = this.client.send(
-          'sendExpoNotification',
-          createNotificationDto,
-        );
-        const emailNotification = this.client.send(
-          'sendNotificationEmail',
-          createNotificationDto,
-        );
-        const [pushResult, emailResult] = await Promise.all([
-          firstValueFrom(pushNotification),
-          firstValueFrom(emailNotification),
-        ]);
-        return {
-          pushResult,
-          emailResult,
-        };
+        this.client.emit('sendExpoNotification', createNotificationDto);
+        this.client.emit('sendEmailNotification', createNotificationDto);
       }
+
+      return { status: 'Notification emitted successfully' };
     } catch (error) {
+      console.error('Error emitting notification:', error);
       throw new CustomError(
         error.message,
         error.statusCode || 500,
