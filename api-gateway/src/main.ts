@@ -3,6 +3,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { getRmqHost } from './common/config/rmq/rmq.connection';
+import { ResponseInterceptor } from './common/shared/interceptors/response.interceptors';
 declare const module: any;
 
 async function bootstrap() {
@@ -23,6 +24,13 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addTag('API Gateway')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      description:
+        'Enter JWT token in this format - Bearer YOUR_TOKEN to access protected routes only.',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     ignoreGlobalPrefix: false,
@@ -34,6 +42,8 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
   });
+  // global interceptors
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   await app.startAllMicroservices();
   await app.listen(3000);

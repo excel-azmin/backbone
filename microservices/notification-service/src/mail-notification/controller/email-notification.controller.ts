@@ -11,7 +11,6 @@ export class EmailNotificationController {
 
   @MessagePattern('sendEmailNotification')
   async sendMail(@Payload() createNotification: CreateNotificationDto) {
-    console.log('Email Notification Payload Received:', createNotification);
     if (createNotification.email.length > 1) {
       return await this.emailNotificationService.sendBulkMail(
         createNotification,

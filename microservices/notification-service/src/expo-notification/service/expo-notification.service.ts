@@ -69,7 +69,6 @@ export class ExpoNotificationService {
     updateNotificationDto: UpdateNotificationDto,
   ): Promise<any> {
     const { ...updateData } = updateNotificationDto;
-    console.log('updateData', updateData);
     const updatedNotification = await this.notificationModel.findByIdAndUpdate(
       id,
       updateData,

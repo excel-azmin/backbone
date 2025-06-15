@@ -126,7 +126,6 @@ export class NotificationGateway
   @SubscribeMessage('mark-as-read-all')
   async markAsReadAll(@MessageBody() userId: string) {
     try {
-      console.log('User Id', userId);
       const notification =
         await this.notificationService.markAsReadAllNotification(userId);
       const notifications: Record<string, any> = {};

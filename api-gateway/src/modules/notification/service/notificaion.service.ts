@@ -42,7 +42,6 @@ export class NotificationService {
     id: string,
     updateNotificationDto: UpdateNotificationDto,
   ) {
-    console.log('Notification id', id);
     const result = this.client.send('updateExpoNotification', {
       id,
       updateNotificationDto,

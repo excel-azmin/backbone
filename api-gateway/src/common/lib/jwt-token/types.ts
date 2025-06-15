@@ -4,6 +4,8 @@ import { z } from 'zod';
 export const LoginTokenPayloadSchema = z.object({ id: z.string() });
 export const RegistrationTokenPayloadSchema = z.object({
   email: z.string().email(),
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
 });
 export const RefreshTokenPayloadSchema = z.object({
   email: z.string().email(),

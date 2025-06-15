@@ -1,10 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { OTPVerifyAuthGuard } from 'src/common/shared/guards/verify-auth.guard';
+import { RequestWithOTP } from 'src/common/shared/interface/response';
 import { LoginCommand } from '../command/login-command';
 import { RegistrationCommand } from '../command/registation-command';
+import { VerifyRegistrationCommand } from '../command/verify-registation-command';
 import { LoginAuthDto } from '../dto/login-auth.dto';
 import { RegistrationAuthDto } from '../dto/registration-auth.dto';
+import { VerifyRegistrationAuthDto } from '../dto/verify-registration-auth.dto';
 
 @Controller('auth')
 @ApiTags('Authentication and Authorization')
@@ -16,9 +20,20 @@ export class AuthController {
 
   @Post('v1/registration')
   async authRegistration(@Body() registrationAuthDto: RegistrationAuthDto) {
-    console.log(registrationAuthDto);
     return await this.commandBus.execute(
       new RegistrationCommand(registrationAuthDto),
+    );
+  }
+
+  @Post('v1/registration/verify')
+  @ApiBearerAuth()
+  @UseGuards(OTPVerifyAuthGuard)
+  async authRegistrationVerify(
+    @Body() verifyRegistrationAuthDto: VerifyRegistrationAuthDto,
+    @Req() req: RequestWithOTP,
+  ) {
+    return await this.commandBus.execute(
+      new VerifyRegistrationCommand(verifyRegistrationAuthDto, req.user),
     );
   }
 

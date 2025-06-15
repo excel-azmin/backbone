@@ -43,7 +43,6 @@ export class NotificationController {
 
   @Get('mark-as-read-all')
   async markAsReadAllNotification(@Req() req: any) {
-    console.log('User Id', req.user.id);
     return await this.notificationService.markAsReadAllNotification(
       req.user.id,
     );
